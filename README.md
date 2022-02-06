@@ -40,3 +40,73 @@ npm install webpack webpack-cli ts-loader -D
 ```
 npm install typescript -D
 ```
+
+## Webpack Config File
+
+* In order to tell `webpack` how to compile and bundle our code, we need to create a webpack config file.
+* So we need to create a new file in the root directory with name as `webpack.config.js`. The naming of this file is important and it is a `javascript` file.
+* The first thing we need to do inside this file is to export an object using the NodeJS module system, because webpack is ultimately is going to be read by NodeJS
+```
+module.exports = {
+    // here goes the configuration
+}
+```
+* Inside this object we need to first specify the `entry` and `output` files. Entry file means the typescript source files (i.e files from the /src folder) and output files means the resulting javascript buldle that webpack is going to spit out into the public folder at the end.
+* The `entry` file is the main file in the dependency tree which imports all the other files also.
+* The `output` is going to be an object, where we need to specify a few different properties. 
+    1. `filename`: What do we want to call the javascript file that is going to dumped ultimately inside the public folder
+    2. `path`: absolute path to where we want to output this file. As this is an absolute path we will use `path` module to create it. Path module is something that comes along with nodeJS, we don't need to install anything extra
+* The next thing we need to do is tell webpack to compile typescript files or modules using the TS Loader package into JavaScript. Because without this all we are doing is specifying an `entry` point and an `output`, and it doesn't know what to do in between to compile the TypeScript into JavaScript. And to do this we will use the `module` property.
+* `module` just basically means file, so its going to look at files and do things to the different files. It is an `object` and inside it we have a `rules` property which is an `array`. Inside this `array` we can have an `object` for each different rule.
+* We need a rule that is going to transform or compile typescript files into javascript
+```
+{
+    test: /\.ts$/,
+    use: 'ts-loader'
+}
+```
+* In above rule we specify a `test` for a file, i.e a regex to check for only typescript file.
+* Once a file passes that test we use the `ts-loader` package using `use` property to convert that file into javascript.
+* We also want a property called `include` which is an `array`. This property is going to specify where the typescript files could be. (eg we may need to only include ts files from the src folder)
+* We can also specify the `target`. Because JavaScript can be written for both server and browser, webpack offers multiple deployment targets that you can set in your webpack configuration. 
+* We will use `target: ['web', 'es5']`. So here webpack will generate a runtime code for `web` platform and will use only `ES5` features.
+* The final webpack config file will look as follows
+
+```
+const path = require('path');
+
+module.exports = {
+    entry: './src/index.ts',
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                use: 'ts-loader',
+                include: [path.resolve(__dirname, 'src')]
+            }
+        ]
+    },
+    output: {
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'public')
+    },
+    target: ['web', 'es5']
+}
+```
+* To run this config file or to perform the bundling all we need to do is call this command
+```
+webpack
+```
+* This will run the `webpack.config.js` file for us and perform all the operations defined in the config file and create a buldled js file for us.
+* We can also define a script for this in the `package.json` file
+```
+"scripts": {
+    "build": "webpack",
+    ...
+}
+```
+* Now we can run the following command, and it will do the same thing for us
+```
+npm run build
+```
+
