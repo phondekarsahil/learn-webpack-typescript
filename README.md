@@ -110,3 +110,34 @@ webpack
 npm run build
 ```
 
+## Webpack Dev Server
+
+* We can use Webpack Dev Server if we want to be able to preview our code as we write on the fly in a browser and also whenever we make changes to our code, we want webpack to automatically re-run so that it recompiles the typescript into javascript and that changes then reflect in the browser.
+* For this we need to install the webpack dev server as a dev dependency
+```
+npm install webpack-dev-server -D
+```
+* Once installed we can start the development server using command
+```
+webpack-dev-server
+```
+* Or We can also define a script for this in the `package.json` file and call that script.
+```
+"scripts": {
+    "serve": "webpack-dev-server",
+    ...
+}
+```
+```
+npm run serve
+```
+* Now whenever we change the code dev server recompiles. But the porblem is although its recompiling, its not rebuilding the resulting code and spitting it out in the `bundle.js`. ALthough its not the job of the dev server to build the bundle, it recompiles and stores the resulting javascript in the memory, and not an actual file.
+* To specify which path to look for the app on server we add a property `publicPath` where we can specify the path where we will find bundled files after build.
+* we kept `publicPath` as `''` because essentially, every file emitted to your `output.path` directory will be referenced from the output.publicPath location. And `output.path` already references to the `public` directory
+```
+output: {
+    publicPath: '',
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'public')
+},
+```
