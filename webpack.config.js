@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+    devtool: 'eval-source-map',
     mode: 'development',
     entry: './src/index.ts',
     module: {
@@ -19,5 +20,5 @@ module.exports = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'public')
     },
-    // target: ['web', 'es5']
+    target: ['web', 'es5']
 }

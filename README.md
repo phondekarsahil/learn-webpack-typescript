@@ -162,3 +162,28 @@ module.exports = {
 }
 ```
 * So now when we import something, webpack is going to know how to resolve that file.
+
+## Source Maps
+
+* Sometimes when you are building an application and you are building to the buldle you might like to work in the browser to debug your code and test your code. 
+* When using any other live development server it will serve the buldled javascript file and it will be difficult to find the exact file or place in the development src folder where some error occurs.
+* This can be overcomed using source maps
+* A Source map creates link between source files and compiles output files. This will help us debug files directly inside the browser.
+* To setup source maps in typescript and webpack we need to add this property in `tsconfig.json` file
+```json
+{
+  "compilerOptions": {
+      //...
+      "sourceMap": true,
+      //...
+  }
+}    
+```
+* Next thing we need to add in `webpack.config.json` is set `devtool` property to `"eval-source-map"`
+```javascript
+module.exports = {
+    devtool: 'eval-source-map',
+    //..
+}
+```
+* Using source maps makes the development and debugging process easy
