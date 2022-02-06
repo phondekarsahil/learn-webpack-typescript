@@ -187,3 +187,9 @@ module.exports = {
 }
 ```
 * Using source maps makes the development and debugging process easy
+
+## Wrap Up
+
+* Besides converting and bundling typescript files to javascript, there is also much more you can do with webpack.
+* We can use style and SASS loaders for working with styles, or Json loaders for working with json files
+* You can even use loaders in webpack for things like html and template files.
