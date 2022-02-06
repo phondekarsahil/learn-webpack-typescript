@@ -12,10 +12,12 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        extensions: ['.ts', '.js']
+    },
     output: {
-        publicPath: '',
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'public')
     },
-    target: ['web', 'es5']
+    // target: ['web', 'es5']
 }

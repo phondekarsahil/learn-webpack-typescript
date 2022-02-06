@@ -141,3 +141,24 @@ output: {
     path: path.resolve(__dirname, 'public')
 },
 ```
+
+## Using ES6 Modules
+
+* Writing our code in a single file will make it really long and hard to manage, so sometimes we need to split our code into different files. This makes our code more modular and more reusable, and easier to read as well.
+* We can use different files and different modules in typescript and then have webpack combine all of these modules into single buldled file at the end.
+* We can `import` the files in another file using the node module system as follows
+```
+import { formData } from './forms'; 
+```
+* You can see here that we don't specify the extention of the file `.js` or `.ts`, webpack is going to figure it out for us, and we need to setup some configuration for webpack to do that.
+* We need to add a property `resolve`. This is going to be an `object` and inside that we have `extensions` property to say what extensions we want webpack to be able to resolve. This is going to be an `array`.  
+```
+module.exports = {
+    //...
+    resolve: {
+        extensions: ['.ts', '.js']
+    },
+    //...
+}
+```
+* So now when we import something, webpack is going to know how to resolve that file.
